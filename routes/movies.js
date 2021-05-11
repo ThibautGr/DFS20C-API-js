@@ -10,6 +10,9 @@ router.get('/movies',async (req, res, next) => {
     if (req.query.genreId){
         res.json(await MovieController.getByGenre(req.query.genreId));
     }
+    if(req.query.sort){
+        res.json(await MovieController.sortByYear(req.query.sort));
+    }
     else {
         res.json(await MovieController.getAll());
     }

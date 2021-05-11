@@ -25,8 +25,14 @@ class MovieController {
             }
         });
     }
+    async sortByYear(sort){
+        // if (cdt = 'DESC'){
+           return Movie.findAll({
+               order:[ [sort,'DESC']]
+            });
+    }
 
-
+///////Première tentative mais renvoyait une promise ????!!!
     // async getByGenre(genreName){
     //     // on récupère l'Id des genres qui contiennent le mot "genreName"
     //
