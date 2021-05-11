@@ -13,6 +13,9 @@ router.get('/movies',async (req, res, next) => {
     if(req.query.sort){
         res.json(await MovieController.sortByYear(req.query.sort));
     }
+    if (req.query.keyword){
+        res.json(await MovieController.search(req.query.keyword));
+    }
     else {
         res.json(await MovieController.getAll());
     }

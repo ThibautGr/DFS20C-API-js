@@ -25,11 +25,22 @@ class MovieController {
             }
         });
     }
+
     async sortByYear(sort){
         // if (cdt = 'DESC'){
            return Movie.findAll({
                order:[ [sort,'DESC']]
             });
+    }
+
+    async search(keyWord){
+        return Movie.findAll({
+            where:{
+                title: {
+                    [Op.like]: keyWord+'%'
+                }
+            }
+        });
     }
 
 ///////Première tentative mais renvoyait une promise ????!!!
