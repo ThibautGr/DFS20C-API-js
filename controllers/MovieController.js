@@ -9,12 +9,8 @@ class MovieController {
         return Movie.findByPk(id);
     }
 
-    async add(title, description, year) {
-        return await Movie.create({
-            title : title,
-            description : description,
-            year : year
-        });
+    async add(data) {
+        return Movie.create(data)
     }
 
     async update (id, payload) {

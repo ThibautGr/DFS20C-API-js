@@ -22,11 +22,9 @@ router.post('/movies',async (req, res, next)=>{
     if (req.body.title && req.body.description && req.body.year){
         const insertedMovies = await MovieController.add(req.body);
         res.status(201).json(insertedMovies)
-    }
-    else {
+    } else {
         res.status(400).end();
     }
-
 });
 
 
