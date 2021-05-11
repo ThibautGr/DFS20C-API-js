@@ -1,8 +1,10 @@
 const Movie = require ('../models').Movie;
+const Producer = require ('../models').Producer;
+const Genre = require ('../models').Genre;
 
 class MovieController {
     async getAll() {
-        return Movie.findAll();
+        return Movie.findAll({include:[Producer, Genre]});
     }
 
     async getById(id) {

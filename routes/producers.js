@@ -41,9 +41,9 @@ router.patch('/producers/:id',async (req, res, next)=>{
 });
 
 router.delete('/producers/:id', async (req, res, next)=>{
-   const sucess = await ProducerController.delete(req.params.id);
+   const success = await ProducerController.delete(req.params.id);
 
-   if (sucess){
+   if (success){
       return res.status(204).end();
    }
    else {
