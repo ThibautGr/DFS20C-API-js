@@ -15,7 +15,6 @@ router.get('/movies/:id',async (req,res,next)=>{
     else {
         res.status(404).json({"error" : "movie doesn't exist"})
     }
-
 });
 
 router.post('/movies',async (req, res, next)=>{
@@ -42,7 +41,6 @@ router.patch('/movies/:id',async (req, res, next)=>{
 
 router.delete('/movies/:id', async (req, res, next)=>{
     const success = await MovieController.delete(req.params.id);
-
     if (success){
         return res.status(204).end();
     }
