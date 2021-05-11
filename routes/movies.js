@@ -3,9 +3,17 @@ const MovieController = require ('../controllers').MovieController
 let express = require('express');
 let router = express.Router();
 
-router.get('/movies',async (req, res, next) =>{
-    res.json(await MovieController.getAll());
+router.get('/movies',async (req, res, next) => {
+    if (req.query.page) {
+        res.json(await MovieController.getPageMovie(req.query.page));
+    }
+
+    else {
+        res.json(await MovieController.getAll());
+    }
+
 });
+
 
 router.get('/movies/:id',async (req,res,next)=>{
     const movie = await MovieController.getById(req.params.id);

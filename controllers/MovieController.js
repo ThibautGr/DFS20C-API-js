@@ -7,6 +7,19 @@ class MovieController {
         return Movie.findAll({include:[Producer, Genre]});
     }
 
+    async getPageMovie(pageNumber){
+      let decalage = -10;
+        if (pageNumber != "last") {
+            decalage += pageNumber * 10
+        } else if (pageNumber == "last"){
+            decalage += await Movie.count()
+        }
+        return Movie.findAll({include:[Producer, Genre], limit: 10, offset: decalage});
+    }
+
+
+
+
     async getById(id) {
         return Movie.findByPk(id);
     }
