@@ -7,12 +7,14 @@ router.get('/movies',async (req, res, next) => {
     if (req.query.page) {
         res.json(await MovieController.getPageMovie(req.query.page));
     }
-
+    if (req.query.genreId){
+        res.json(await MovieController.getByGenre(req.query.genreId));
+    }
     else {
         res.json(await MovieController.getAll());
     }
-
 });
+
 
 
 router.get('/movies/:id',async (req,res,next)=>{

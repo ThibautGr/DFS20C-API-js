@@ -1,6 +1,7 @@
 const Movie = require ('../models').Movie;
 const Producer = require ('../models').Producer;
 const Genre = require ('../models').Genre;
+const { Op } = require("sequelize");
 
 class MovieController {
     async getAll() {
@@ -17,7 +18,31 @@ class MovieController {
         return Movie.findAll({include:[Producer, Genre], limit: 10, offset: decalage});
     }
 
+    async getByGenre(genreId){
+        return Movie.findAll({
+            where: {
+                genreId: genreId
+            }
+        });
+    }
 
+
+    // async getByGenre(genreName){
+    //     // on récupère l'Id des genres qui contiennent le mot "genreName"
+    //
+    //    const genre =  Genre.findAll({
+    //         where: {
+    //             name: genreName
+    //         }
+    //     });
+    //     // On récupère les films dont les genreId correspondent à la première requête
+    //
+    //     console.log(genre);
+    //     // return Movie.findAll({include:[Genre, Producer], where: {
+    //     // genreId : genre[0]}
+    //     // });
+    //
+    // }
 
 
     async getById(id) {
