@@ -1,4 +1,5 @@
 const MovieController = require ('../controllers').MovieController
+const Movie = require ('../models').Movie;
 
 let express = require('express');
 let router = express.Router();
@@ -6,8 +7,8 @@ let router = express.Router();
 router.get('/movies',async (req, res, next) => {
 
     if (req.query.page) {
-         const pageNumber = await MovieController.getPageMovie(req.query.page)
-        if(pageNumber){
+        const pageNumber = await MovieController.getPageMovie(req.query.page)
+        if(pageNumber.length !== 0){
             res.status(200).json(pageNumber);
         }
         else{
@@ -17,8 +18,7 @@ router.get('/movies',async (req, res, next) => {
 
     if (req.query.genreId) {
         const genre = await MovieController.getByGenre(req.query.genreId)
-        console.log(genre)
-        if (genre) {
+        if (genre.length !== 0) {
             res.status(200).json(genre);
         } else {
             res.status(404).json({"error": "This genre doesn't exist"});
@@ -26,29 +26,24 @@ router.get('/movies',async (req, res, next) => {
     }
 
     if(req.query.sort){
-        const sortToSearch = await MovieController.sortByYear(req.query.sort)
-        if(sortToSearch){
+        if( req.query.sort === 'year' ||  req.query.sort === 'title' ){
+            const sortToSearch = await MovieController.sortByYear(req.query.sort);
             res.status(200).json(sortToSearch);
+        } else  {
+            res.status(400).json({"error": "You can only sort by Year or Title" });
         }
-        else{
-            res.status(404).json({"error": "This genre doesn't exist"});
-        }
+
     }
 
     if (req.query.keyword){
         const mykeyword =  await MovieController.search(req.query.keyword);
-
-        if(mykeyword){
+        if(mykeyword.length !== 0){
             res.status(200).json(mykeyword);
-        }
-        else{
+        } else {
             res.status(404).json({"error": "This keyword doesn't match"});
         }
     }
 
-    else {
-        res.status(200).json(await MovieController.getAll());
-    }
 });
 
 
@@ -57,8 +52,7 @@ router.get('/movies/:id',async (req,res,next)=>{
     const movie = await MovieController.getById(req.params.id);
     if (movie){
         res.json(movie)
-    }
-    else {
+    } else {
         res.status(404).json({"error" : "movie doesn't exist"})
     }
 });
@@ -74,7 +68,7 @@ router.post('/movies',async (req, res, next)=>{
 
 
 router.patch('/movies/:id',async (req, res, next)=>{
-    if(!req.body.title && !req.body.description && req.body.year){
+    if (!req.body.title && !req.body.description && req.body.year){
         res.status(400).end();
     }
 
